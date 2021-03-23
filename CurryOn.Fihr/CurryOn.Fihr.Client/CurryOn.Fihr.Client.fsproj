@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Model.fs" />
+    <Compile Include="Response.fs" />
+    <Compile Include="Client.fs" />
+    <Compile Include="HttpBuilder.fs" />
+    <Compile Include="HttpApiClient.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CurryOn.Serialization" Version="0.1.0-prerelease" />
+    <PackageReference Include="CurryOn.Tracing" Version="0.1.0-prerelease" />
+    <PackageReference Include="CurryOn.Validation" Version="0.1.0-prerelease" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0-prerelease</Version>
+    <Authors>Eshbach, Aaron</Authors>
+    <Company>CurryOn.Fihr</Company>
+    <Description>HTTP API Gateway based on the CurryOn.Fihr Framework</Description>
+    <PackageTags>coref rest api gateway</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Core.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CurryOn.Fihr.Auditing\CurryOn.Fihr.Auditing.fsproj" />
+    <ProjectReference Include="..\CurryOn.Fihr.Caching\CurryOn.Fihr.Caching.fsproj" />
+    <ProjectReference Include="..\CurryOn.Fihr.Middleware\CurryOn.Fihr.Middleware.fsproj" />
+    <ProjectReference Include="..\CurryOn.Fihr.Tracing\CurryOn.Fihr.Tracing.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
+  </ItemGroup>
+
+</Project>
