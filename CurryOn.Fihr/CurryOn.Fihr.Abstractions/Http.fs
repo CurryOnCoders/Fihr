@@ -28,7 +28,11 @@ module RequestId =
         id |> sprintf "%A"
 
     let guid (RequestId id) = id
-        
+
+type IClaim =
+    abstract member Type: string
+    abstract member Value: string
+
 type IHttpClientMetadata =
     abstract member Host: string
     abstract member User: string
@@ -50,6 +54,9 @@ type IHttpResponse =
     abstract member Body: byte []
     abstract member Timestamp: DateTime
     abstract member ElapsedTime: TimeSpan
+
+type IClaimProvider =
+    abstract member GetClaims: string -> IHttpRequest -> IClaim list    
 
 module HttpMethod =
     let parse (httpMethod: string) =

@@ -21,6 +21,10 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CurryOn.Fihr.Middleware.Cor
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CurryOn.Fihr.Tracing", "CurryOn.Fihr.Tracing\CurryOn.Fihr.Tracing.fsproj", "{E9632518-F823-4F16-8B32-F34E86E2207C}"
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CurryOn.Fihr.Auth.JwtBearer", "CurryOn.Fihr.Auth.JwtBearer\CurryOn.Fihr.Auth.JwtBearer.fsproj", "{AADFAA7F-32F1-4E43-8429-A04F5EB7264C}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CurryOn.Fihr.Auth", "CurryOn.Fihr.Auth\CurryOn.Fihr.Auth.fsproj", "{C1E701E9-4CE4-4223-AC4C-9E99EBA922BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{E9632518-F823-4F16-8B32-F34E86E2207C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9632518-F823-4F16-8B32-F34E86E2207C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9632518-F823-4F16-8B32-F34E86E2207C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADFAA7F-32F1-4E43-8429-A04F5EB7264C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADFAA7F-32F1-4E43-8429-A04F5EB7264C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADFAA7F-32F1-4E43-8429-A04F5EB7264C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADFAA7F-32F1-4E43-8429-A04F5EB7264C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E701E9-4CE4-4223-AC4C-9E99EBA922BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E701E9-4CE4-4223-AC4C-9E99EBA922BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E701E9-4CE4-4223-AC4C-9E99EBA922BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E701E9-4CE4-4223-AC4C-9E99EBA922BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

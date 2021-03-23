@@ -190,6 +190,25 @@ type RequestUrlAttribute () =
 type RequestIdAttribute () =
     inherit HttpRequestMetadataAttribute()
 
+[<AllowNullLiteral>]
+[<AttributeUsage(AttributeTargets.Parameter)>]
+type ClaimAttribute (name: HttpHeaderAttributeName) =
+    inherit Attribute()
+    new () = ClaimAttribute(UseParameterName)
+    new (claim: string) = ClaimAttribute(UseGivenName claim)
+    member __.Claim = name
+
+/// Attribute used to populate a service parameter based on the specific authorized role.
+[<AllowNullLiteral>]
+[<AttributeUsage(AttributeTargets.Parameter)>]
+type AuthorizedRoleAttribute(targetRole: string option) =
+    inherit HttpRequestMetadataAttribute()
+    new (targetRole: string) =
+        AuthorizedRoleAttribute(Option.ofObj targetRole)
+    new () = 
+        AuthorizedRoleAttribute(None)
+
+    member __.TargetRole = targetRole
 
 [<AllowNullLiteral>]
 [<AttributeUsage(AttributeTargets.Method ||| AttributeTargets.Property, AllowMultiple = false)>]
