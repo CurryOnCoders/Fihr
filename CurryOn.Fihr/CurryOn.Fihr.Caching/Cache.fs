@@ -70,6 +70,7 @@ module Cache =
                     member __.RequestId = request.RequestId
                     member __.Body = request.Body
                     member __.Client = request.Client
+                    member __.Principal = request.Principal
                     member __.Headers = request.Headers
                     member __.Method = request.Method
                     member __.Server = request.Server

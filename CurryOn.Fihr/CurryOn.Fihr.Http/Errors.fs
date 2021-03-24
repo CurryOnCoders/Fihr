@@ -55,7 +55,8 @@ type HttpRequestError =
 | NoMatchingEntryPointsFound
 | UnsupportedReturnType of Type
 | EntryPointTypeNotSupported of Type
-| UnresolveDependencies of DependencyInjectionError
+| UnresolvedDependencies of DependencyInjectionError
 | HttpResponseSerializationError of SerializationError
+| InvalidAttributeError of string
 | UnhandledExceptionExecutingRequest of exn
 

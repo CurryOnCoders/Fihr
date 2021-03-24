@@ -66,6 +66,8 @@ module HttpContext =
                         return body
                     }
 
+                let principal = context.User |> Option.ofObj
+
                 let request =
                     {
                         Url = Uri url
@@ -73,6 +75,7 @@ module HttpContext =
                         RequestId = requestId
                         Headers = headers
                         Timestamp = timestamp
+                        Principal = principal
                         Server = Environment.MachineName
                         Client = client
                         Body = body

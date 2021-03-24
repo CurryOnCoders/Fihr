@@ -7,7 +7,6 @@
   <ItemGroup>
     <Compile Include="Token.fs" />
     <Compile Include="Handler.fs" />
-    <Compile Include="Middleware.fs" />
   </ItemGroup>
 
   <ItemGroup>

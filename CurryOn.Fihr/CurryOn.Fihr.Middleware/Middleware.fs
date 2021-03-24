@@ -5,9 +5,9 @@ open CurryOn.DependencyInjection
 open CurryOn.Fihr
 open CurryOn.Fihr.Http
 open Microsoft.AspNetCore
+open Microsoft.AspNetCore.Authorization
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Primitives
-open System.IO
 
 module internal Middleware =
     let httpError requestId name message =
@@ -105,10 +105,51 @@ module internal Middleware =
                     do! context.Response.WriteAsync("HTTP 500 - Internal Server Error") |> Async.AwaitTask
         }
 
+    let private invokeIfAuthorized (context: HttpContext) (entryPoint: IEntryPoint) (request: IHttpRequest) parameters =
+        asyncResult {
+            let authorizationRequirements = entryPoint.GetAttributes<AuthorizeAttribute>() 
+            match authorizationRequirements with
+            | [||] ->
+                return! HttpRequest.callEntryPointAsync entryPoint request parameters
+            | [| attribute |] ->
+                match attribute with
+                | policy when not (isNullOrEmpty attribute.Policy) ->
+                    // Authorization is handled via policy, use the IAuthorizationService
+                    let! authorizationService = inject<IAuthorizationService>() |> Injected.run context.RequestServices |> Result.mapError UnresolvedDependencies
+                    match request.Principal with
+                    | Some principal ->
+                        let! result = authorizationService.AuthorizeAsync(principal, attribute.Policy) |> Async.AwaitTask
+                        if result.Succeeded then
+                            return! HttpRequest.callEntryPointAsync entryPoint request parameters
+                        else 
+                            return injectedAsync { return Http.forbidden () }
+                    | None ->
+                        return injectedAsync { return Http.forbidden () }
+                | role when not (isNullOrEmpty attribute.Roles) ->
+                    // Authorization is handled via roles, use ClaimsPrincipal.IsInRole
+                    match request.Principal with
+                    | Some principal ->
+                        if attribute.Roles |> String.split "," |> Seq.exists principal.IsInRole then
+                            return! HttpRequest.callEntryPointAsync entryPoint request parameters
+                        else 
+                            return injectedAsync { return Http.forbidden () }
+                    | None ->
+                        return injectedAsync { return Http.forbidden () }  
+                | _ ->
+                    // Authorization is not enforcing any specific policy or role, just check that the user is logged-in
+                    match request.Principal with
+                    | Some principal when principal.Identity.IsAuthenticated ->
+                        return! HttpRequest.callEntryPointAsync entryPoint request parameters
+                    | _ ->
+                        return injectedAsync { return Http.forbidden () }  
+            | _ ->
+                return! Error <| InvalidAttributeError "Only one Authorize attribute may be used on a single endpoint"
+        }
+
     let invoke (context: HttpContext) =
         asyncResult {
             let! request = HttpContext.toRequest context
-            let! entryPointResult = HttpRequest.findEntryPoint request |> Injected.run context.RequestServices |> Result.mapError UnresolveDependencies
+            let! entryPointResult = HttpRequest.findEntryPoint request |> Injected.run context.RequestServices |> Result.mapError UnresolvedDependencies
             
             let! response = 
                 match entryPointResult with
@@ -117,7 +158,7 @@ module internal Middleware =
             
                     let callService () = 
                         asyncResult {
-                            let! injectable = HttpRequest.callEntryPointAsync entryPoint request parameters
+                            let! injectable = invokeIfAuthorized context entryPoint request parameters
                             let! response = injectable |> Injected.run context.RequestServices |> AsyncResult.toAsync
                             return
                                 match response with

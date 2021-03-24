@@ -2,6 +2,7 @@
 
 open CurryOn
 open System
+open System.Security.Claims
 
 type HttpClientMetadata =
     {
@@ -18,6 +19,7 @@ type HttpRequestMessage =
         Method: HttpMethod
         Url: Uri
         Body: byte []
+        Principal: ClaimsPrincipal option
         Client: HttpClientMetadata
         Server: string
         Timestamp: DateTime
@@ -27,6 +29,7 @@ type HttpRequestMessage =
         member this.Method = this.Method
         member this.Url = this.Url
         member this.Body = this.Body
+        member this.Principal = this.Principal
         member this.Client = this.Client :> IHttpClientMetadata
         member this.Server = this.Server
         member this.Timestamp = this.Timestamp        

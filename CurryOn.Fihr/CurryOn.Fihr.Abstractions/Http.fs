@@ -2,6 +2,7 @@
 
 open CurryOn
 open System
+open System.Security.Claims
 
 [<RequireQualifiedAccess>]
 type HttpMethod =
@@ -43,6 +44,7 @@ type IHttpRequest =
     abstract member Method: HttpMethod
     abstract member Url: Uri
     abstract member Body: byte []
+    abstract member Principal: ClaimsPrincipal option
     abstract member Client: IHttpClientMetadata
     abstract member Server: string
     abstract member Timestamp: DateTime
