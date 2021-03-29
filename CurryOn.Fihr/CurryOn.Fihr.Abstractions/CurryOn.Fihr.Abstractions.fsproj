@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0-prerelease</Version>
+    <Authors>Eshbach, Aaron</Authors>
+    <Company>CurryOn.Fihr</Company>
+    <Description>HTTP Interface Abstractions for F#</Description>
+    <PackageTags>http interface</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
